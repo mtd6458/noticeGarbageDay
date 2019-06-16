@@ -2,6 +2,7 @@ function noticeGarbageDay() {
   var accessToken     = 'xxxxxxxxxxxxxxxxx'; 
   var comment         = [];
   var date            = new Date();
+  // date.setDate(date.getDate()+2); // debug
   var weeklyNumber    = Math.floor((date.getDate() - 1) / 7) + 1;
   var secondMonday    = 2;
   var fourthMonday    = 4;
@@ -29,8 +30,14 @@ function noticeGarbageDay() {
     case 6: // 土曜日
       break;
   }
-   
-  if (comment.length < 1) return
+  
+  // 月は0を基点としている為、＋１する
+  var month = date.getMonth() + 1;
+  var date  = date.getDate();
+  if (comment.length < 1) {
+    Logger.log('%s月%s日 通知なし', month.toString(), date.toString());
+    return
+  }
   
   var message = '\n今日は' + comment.join('、') + 'を捨てる日だよ。\nえっへん！';
   var options = {
